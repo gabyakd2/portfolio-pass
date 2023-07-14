@@ -27,8 +27,8 @@ function Banner() {
   }, [text]);
 
   function tick() {
-    let i = loopNum % toRotate.length;
-    let fullText = toRotate[i];
+    let i: number = loopNum % toRotate.length;
+    let fullText: string = toRotate[i];
     let updatedText = isDeleting
       ? fullText.substring(0, text.length - 1)
       : fullText.substring(0, text.length + 1);
