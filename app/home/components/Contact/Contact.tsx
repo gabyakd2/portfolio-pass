@@ -1,10 +1,12 @@
+'use client'
+
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Row  } from 'react-bootstrap';
 import imgForm1 from '../../../../public/images/imgForm.png';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-import '.contact.css';
-import { FormDetails, Status } from './models';
+import './contact.css';
+import { ApiResponse, FormDetails, Status } from './models';
 import Image from 'next/image';
 
 
@@ -41,7 +43,11 @@ function Contact() {
       body: JSON.stringify(formDetails),
     });
     setButtonText("Enviar");
-    let result: Promise<any> = response.json();
+
+    if (!response.ok) {
+      throw new Error("Error en la solicitud al servidor");
+    }
+    let result: ApiResponse = await response.json();
 
     setFormDetails(formInitalDetails);
     if (result.code === 200) {
@@ -115,7 +121,6 @@ function Contact() {
                   <Col>
                     <textarea
                       name="Mensaje"
-                      row="6"
                       value={formDetails.message}
                       placeholder="Mensaje"
                       onChange={(e) =>
